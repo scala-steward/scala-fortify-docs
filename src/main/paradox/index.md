@@ -1,7 +1,221 @@
 # Fortify SCA for Scala
 
-This is just a placeholder.  Documentation will appear here once
-Fortify SCA for Scala becomes generally available.
+## Requirements
 
-In the meantime, please visit
-https://info.lightbend.com/TRL-20XX-HP-Fortify-Access_RES-LP.html
+This release supports translating and scanning Scala source code on
+the following platforms:
+
+- Linux
+- MacOS
+- Windows
+
+The following Java Virtual Machine versions are supported:
+
+- Java 8
+
+The following Scala versions are supported:
+
+- Scala 2.11.12, 2.11.11, 2.11.8
+- Scala 2.12.4, 2.12.3
+
+The latest patch releases are recommended (2.11.12 and 2.12.4, as of
+November 2017).
+
+To translate Scala code for Fortify to scan, you must be a current
+Lightbend subscriber.
+
+To actually scan translated code for vulnerabilities, you must be a
+licensed Fortify SCA user. Fortify SCA version 17.20 (or newer)
+is required.
+
+## Supported language features
+
+All of Scala is supported by the translator.
+
+## License installation
+
+The license file for using the Scala translator is a standard Lightbend
+Enterprise Suite license.  Lightbend subscribers can obtain their
+license by visiting
+[https://www.lightbend.com/account/license](https://www.lightbend.com/account/license).
+
+Copy and paste the text from that web page into a file in the correct
+platform-dependent location.  On MacOS and Linux platforms it is
+located at `~/.lightbend/license` and on Windows platform it is
+located at `%homePath%\.lightbend\license`. It should look like:
+
+    ===== LIGHTBEND ENTERPRISE SUITE LICENSE =====
+
+    DO NOT TAMPER WITH THIS FILE - ...
+
+All current Lightbend subscribers should have the `fortify` grant in
+the `grants:` line of the license.  You may need to retrieve a new
+license if the old one was created before mid-July 2017. (Note that
+Lightbend Enterprise Suite trial licenses do not have this grant.)
+
+## Getting and using the translator (via sbt)
+
+Prerequisite: install the sbt build tool
+([link](http://www.scala-sbt.org/download.html)).
+
+Translating Scala source code for Fortify is done by a Scala
+compiler plugin.
+
+You can have sbt resolve the compile plugin if you either
+
+* set up authentication for Lightbend's commercial-releases repository
+* or, mirror the compiler plugin to an internal repository used at your organization.
+  This is usually done in larger organizations.
+
+To authenticate to the commercial-releases repo, create a
+`~/.lightbend/commercial.credentials` file (on MacOS or Linux
+platforms), or a `%homePath%\.lightbend\commercial.credentials` file
+(on Windows) that looks like:
+
+    realm=Bintray
+    host=dl.bintray.com
+    user=********-****-****-****-************@lightbend
+    password=****************************************
+
+but substitute `user` and `password` values that you retrieve
+from https://portal.lightbend.com/ReactivePlatform/Credentials .
+
+And in your project's build definition, add:
+
+    credentials += Credentials(
+      Path.userHome / ".lightbend" / "commercial.credentials")
+    resolvers += Resolver.url(
+      "lightbend-commercial-releases",
+      new URL("http://repo.lightbend.com/commercial-releases/"))(
+      Resolver.ivyStylePatterns)
+
+If the compiler plugin has already been mirrored to an internal repository at
+your organization, you can skip the preceding steps.
+
+Then, add the following to your top-level `build.sbt`:
+
+    addCompilerPlugin(
+      "com.lightbend" %% "scala-fortify" % "1.0.0"
+        classifier "assembly"
+        cross CrossVersion.patch)
+    scalacOptions += s"-P:fortify:build=myproject"
+
+Substituting any build id you like for `myproject`.  Specifying
+the build id causes translated files to be written to the usual
+location used by SCA (`$HOME/.fortify/sca17.2/build/myproject`).
+
+You may also want to add:
+
+    scalacOptions += "-Ystop-before:jvm"
+
+to make compilation stop before any actual JVM classfiles are
+generated.  (You can omit this if you want to let compilation
+finish.)
+
+These changes to your build will cause the compiler plugin to run and
+translated files (with an `.nst` extension) to be generated whenever
+your code is compiled (e.g., with the `compile` task).
+
+For the scan step, supplying the build id again will allow the
+scanner to find the translated files.  For example:
+
+    sourceanalyzer -b myproject -f scan.fpr -scan
+
+### Multi-project builds
+
+If your build has subprojects, then you'll need to adapt the
+above `libraryDependencies += ...` and `scalacOptions += ...`
+settings accordingly.  (By default, the settings will apply
+only to your root project.)
+
+The best way to do this depends on how your build is set up
+and whether you want to enable Fortify SCA on every subproject, or
+only some of them.
+
+If you want to enable Fortify SCA in every subproject and you don't
+mind all of the translated files getting mixed together in the
+top-level `target` directory, then simply add `in ThisBuild` to the
+settings.
+[The sbt documentation on build-level settings](http://www.scala-sbt.org/0.13/docs/Scopes.html#Build-level+settings)
+for details on how this works.
+
+To enable Fortify on a particular subproject, and to keep that
+subproject's translated files in their own `target` directory,
+add the `libraryDependencies` and `scalacOptions` to those
+subprojects only.
+
+If you want to do this across multiple subprojects without
+copy-and-paste, you can store the `libraryDependencies` and
+`scalacOptions` settings in a variable, and then add that variable in
+each subproject.  This technique is shown in
+[the sbt documentation on common settings](http://www.scala-sbt.org/0.13/docs/Multi-Project.html#Common+settings).
+The resulting build definition will look something like this:
+
+    lazy val fortifySettings = Seq(
+      libraryDependencies += ...,
+      scalacOptions += ...)
+    lazy val project1 = project ... (
+      .settings(fortifySettings,
+        // other settings
+      )
+    lazy val project2 = project ... (
+      .settings(fortifySettings,
+        // other settings
+      )
+
+## Getting and using the translator (manually)
+
+Prerequisite: install the Scala compiler
+([link](https://www.scala-lang.org/download/)).
+
+In the following instructions, substitute the actual full Scala 2.11.x
+or 2.12.x version you are using; we use 2.12.4 as the example version.
+
+Using the username and password that you retrieve
+from https://portal.lightbend.com/ReactivePlatform/Credentials ,
+you can download the compiler plugin JAR from:
+
+    https://lightbend.bintray.com/commercial-releases/com.lightbend/scala-fortify_2.12.4/1.0.0/jars/scala-fortify_2.12.4-assembly.jar
+
+Then, supposing you have `scala-fortify_2.12.4-assembly.jar` in your
+current working directory, you can do e.g.:
+
+    scalac -Xplugin:scala-fortify_2.12.4-assembly.jar \
+      -Xplugin-require:fortify \
+      -Ystop-before:jvm \
+      -P:fortify:build=myproject \
+      *.scala
+
+Substituting your own build id for `myproject`.
+
+When build id support is enabled, it is currently assumed that
+you are running a version of Fortify SCA in the 17.2 series,
+so that translated files are written to `~/.fortify/sca17.2`.
+If you are using some other version of Fortify SCA, for
+example some version in the 18.1 series, add e.g.:
+
+    -P:fortify:scaversion=18.1
+
+Including `-Ystop-before:jvm`, as shown above, makes compilation stop
+before any actual JVM classfiles are generated.  You can also
+omit it if you want to let compilation finish.
+
+For the scan step, supplying the build id again will allow the
+scanner to find the translated files.  For example:
+
+    sourceanalyzer -b myproject -f scan.fpr -scan
+
+## Using the translator (other build tools)
+
+If you are using a build tool other than sbt, then:
+
+* Obtain the compiler plugin JAR using the instructions in the previous section
+* Use whatever your build tool's mechanism is for customizing the
+  options passed to scalac, and pass the additional options shown in
+  the previous section.
+
+## Release notes
+
+### 1.0.0 (December 6, 2017)
+
+* first general release
