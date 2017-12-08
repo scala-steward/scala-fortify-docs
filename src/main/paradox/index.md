@@ -163,6 +163,62 @@ The resulting build definition will look something like this:
         // other settings
       )
 
+## Getting and using the translator (with Gradle)
+
+Here is a sample `build.gradle` file showing how to use the translator
+in a Gradle build.
+
+It is assumed that your Lightbend credentials, retrieved from
+https://portal.lightbend.com/ReactivePlatform/Credentials,
+are in `~/.gradle/gradle.properties` as:
+
+    lightbendUser=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx@lightbend
+    lightbendPassword=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+Sample `build.gradle`:
+
+```
+apply plugin: 'scala'
+
+repositories {
+    mavenCentral()
+    ivy {
+        credentials {
+            username lightbendUser
+            password lightbendPassword
+        }
+        url = 'https://repo.lightbend.com/commercial-releases'
+        layout 'pattern', {
+          artifact '[organisation]/[module]/[revision]/[ext]s/[artifact](-[classifier]).[ext]' // by default gradle is missing `(-[classifier])`
+          ivy '[organisation]/[module]/[revision]/[artifact]/[artifact](.[ext])'
+        }
+    }
+}
+
+ext {
+    scalaBinaryVersion = '2.12'
+    scalaVersion = '2.12.4'
+    fortifyPluginVersion = '1.0.0'
+}
+
+configurations {
+    lightbendFortifyPlugin
+}
+
+dependencies {
+    compile("org.scala-lang:scala-library:$scalaVersion") // specify Scala version
+    lightbendFortifyPlugin group: 'com.lightbend', name: "scala-fortify_$scalaBinaryVersion", version: fortifyPluginVersion, classifier: "assembly"
+}
+
+tasks.withType(ScalaCompile) {
+  scalaCompileOptions.additionalParameters = [
+    "-Xplugin:" + configurations.lightbendFortifyPlugin.asPath,
+    "-Xplugin-require:fortify",
+    "-P:fortify:build=myproject"
+  ]
+}
+```
+
 ## Getting and using the translator (manually)
 
 Prerequisite: install the Scala compiler
