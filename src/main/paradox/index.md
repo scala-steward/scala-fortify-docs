@@ -214,6 +214,35 @@ If you are using a build tool other than sbt, then:
   options passed to scalac, and pass the additional options shown in
   the previous section.
 
+## Known issues
+
+To report an issue, please open a support ticket with either Lightbend
+or MicroFocus.
+
+* Java 6, 7, and 9 may work but are not currently officially
+  supported. (issue 222, issue 223)
+* Issues found in Twirl templates are reported as occurring in the
+  generated `.scala` file, not in the original template. (issue 159)
+* Mixed Scala and Java codebases require separately translating
+  the Scala and Java sources. Depending on the dependency structure
+  of the code, not all issues involving both languages may be found.
+  (issue 180)
+* Some kinds of user code cause "There is more than one class named
+  'scala.PartialFunction'" warnings to be printed.  We expect the
+  problem to be fixed in the forthcoming SCA 18.10 release.
+  (issue 239)
+* Some pattern matches may produce spurious
+  "Dead Code : Expression is Always false" reports. (issue 221)
+* Use of `do ... while` may produce spurious
+  "null dereference" reports. (issue 208)
+* When method calls are nested, all issues are reported as occurring
+  on the line of code containing the outermost call. (issue 204)
+* Not all characters are supported in build ids; `-` and `_` work
+  but other special characters may not. (issue 174)
+* On Scala 2.11, the `-Ydelambdafy` flag is not supported and results
+  in "unknown code Function" errors. Disable this flag when using the
+  compiler plugin. (issue 215)
+
 ## Release notes
 
 ### 1.0.0 (December 6, 2017)
