@@ -273,7 +273,7 @@ If you are using a build tool other than sbt, then:
 ## Known issues
 
 To report an issue, please open a support ticket with either Lightbend
-or MicroFocus.
+or Micro Focus.
 
 * Java 6, 7, and 9 may work but are not currently officially
   supported. (issue 222, issue 223)
