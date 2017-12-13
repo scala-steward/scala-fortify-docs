@@ -32,6 +32,15 @@ is required.
 
 All of Scala is supported by the translator.
 
+## Fortify on Demand
+
+[Micro Focus Fortify on Demand](https://software.microfocus.com/en-us/products/application-security-testing/overview),
+version 17.4, also supports Scala. Please see the Fortify on Demand
+documentation for more information on preparing Scala applications. To
+access the documentation, log in to Fortify on Demand, select
+Documentation from the account menu, and run a search for "Preparing
+Scala Application Files".
+
 ## License installation
 
 The license file for using the Scala translator is a standard Lightbend
