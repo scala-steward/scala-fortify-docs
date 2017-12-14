@@ -1,0 +1,24 @@
+# disables sudo
+# this allows for faster builds, using  travis's docker-based build infra
+sudo: false
+
+language: scala
+
+jdk:
+  - oraclejdk8
+
+script:
+  - sbt paradox
+
+notifications:
+  email:
+    - seth.tisue@lightbend.com
+
+before_cache:
+  - find $HOME/.sbt -name "*.lock" | xargs rm
+  - find $HOME/.ivy2/cache -name "ivydata-*.properties" | xargs rm
+cache:
+  directories:
+  - $HOME/.ivy2/cache
+  - $HOME/.sbt/boot
+  - $HOME/.sbt/launchers
