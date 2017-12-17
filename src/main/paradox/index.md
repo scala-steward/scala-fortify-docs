@@ -1,5 +1,9 @@
 # Fortify SCA for Scala
 
+This page documents Scala support in Fortify SCA.  For an
+overview of Fortify SCA in general,
+[visit this Micro Focus page](https://software.microfocus.com/en-us/products/static-code-analysis-sast/overview).
+
 ## Requirements
 
 This release supports translating and scanning Scala source code on
