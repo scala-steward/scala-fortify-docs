@@ -23,7 +23,7 @@ The following Scala versions are supported:
 - Scala 2.12.4, 2.12.3
 
 The latest patch releases are recommended (2.11.12 and 2.12.4, as of
-November 2017).
+January 2018).
 
 To translate Scala code for Fortify to scan, you must be a current
 Lightbend subscriber.
@@ -113,9 +113,11 @@ Then, add the following to your top-level `build.sbt`:
         cross CrossVersion.patch)
     scalacOptions += s"-P:fortify:build=myproject"
 
-Substituting any build id you like for `myproject`.  Specifying
-the build id causes translated files to be written to the usual
-location used by SCA (`$HOME/.fortify/sca17.2/build/myproject`).
+Substituting any build id you like for `myproject`.  Specifying the
+build id causes translated files to be written to the usual location
+used by SCA (`$HOME/.fortify/sca17.2/build/myproject`).  (If you
+prefer to specify the output directory directly, use
+`-P:fortify:out=...` instead, filling in a filesystem path for `...`.)
 
 You may also want to add:
 
@@ -255,7 +257,8 @@ current working directory, you can do e.g.:
       -P:fortify:build=myproject \
       *.scala
 
-Substituting your own build id for `myproject`.
+Substituting your own build id for `myproject`.  (Or, use the
+`-P:fortify:out=...` to specify the output directory directly.)
 
 When build id support is enabled, it is currently assumed that
 you are running a version of Fortify SCA in the 17.2 series,
