@@ -52,10 +52,7 @@ Enterprise Suite license.  Lightbend subscribers can obtain their
 license by visiting
 [https://www.lightbend.com/account/license](https://www.lightbend.com/account/license).
 
-Copy and paste the text from that web page into a file in the correct
-platform-dependent location.  On MacOS and Linux platforms it is
-located at `~/.lightbend/license` and on Windows platform it is
-located at `%homePath%\.lightbend\license`. It should look like:
+The license contents should look like:
 
     ===== LIGHTBEND ENTERPRISE SUITE LICENSE =====
 
@@ -65,6 +62,15 @@ All current Lightbend subscribers should have the `fortify` grant in
 the `grants:` line of the license.  You may need to retrieve a new
 license if the old one was created before mid-July 2017. (Note that
 Lightbend Enterprise Suite trial licenses do not have this grant.)
+
+Copy and paste the text from that web page into a file in the correct
+platform-dependent location.  On MacOS and Linux platforms the default
+location is `~/.lightbend/license` and on the Windows platform it is
+`%homePath%\.lightbend\license`.
+
+You can ask the compiler plugin to look in a different location by
+specifying `-P:fortify:license=...`, substituting any full path you
+like for `...`.
 
 ## Getting and using the translator (via sbt)
 
@@ -108,7 +114,7 @@ your organization, you can skip the preceding steps.
 Then, add the following to your top-level `build.sbt`:
 
     addCompilerPlugin(
-      "com.lightbend" %% "scala-fortify" % "1.0.1"
+      "com.lightbend" %% "scala-fortify" % "1.0.2"
         classifier "assembly"
         cross CrossVersion.patch)
     scalacOptions += s"-P:fortify:build=myproject"
@@ -213,7 +219,7 @@ repositories {
 ext {
     scalaBinaryVersion = '2.12'
     scalaVersion = '2.12.4'
-    fortifyPluginVersion = '1.0.1'
+    fortifyPluginVersion = '1.0.2'
 }
 
 configurations {
@@ -246,7 +252,7 @@ Using the username and password that you retrieve
 from https://portal.lightbend.com/ReactivePlatform/Credentials ,
 you can download the compiler plugin JAR from:
 
-    https://lightbend.bintray.com/commercial-releases/com.lightbend/scala-fortify_2.12.4/1.0.1/jars/scala-fortify_2.12.4-assembly.jar
+    https://lightbend.bintray.com/commercial-releases/com.lightbend/scala-fortify_2.12.4/1.0.2/jars/scala-fortify_2.12.4-assembly.jar
 
 Then, supposing you have `scala-fortify_2.12.4-assembly.jar` in your
 current working directory, you can do e.g.:
@@ -316,6 +322,11 @@ or Micro Focus.
   compiler plugin. (issue 215)
 
 ## Release notes
+
+### 1.0.2 (January 11, 2018)
+
+* the location of the Lightbend license file is now configurable with
+  `-P:fortify:license=...` (issue 263)
 
 ### 1.0.1 (December 20, 2017)
 
