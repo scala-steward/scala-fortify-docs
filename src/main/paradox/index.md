@@ -324,11 +324,11 @@ repositories {
     }
 }
 
-tasks.withType(ScalaCompile) {
+tasks.withType(PlatformScalaCompile) {
     scalaCompileOptions.additionalParameters = [
             "-Xplugin:" + configurations.lightbendFortifyPlugin.asPath,
             "-Xplugin-require:fortify",
-            "-P:fortify:build=play-webgoat"
+            "-P:fortify:build=myproject"
     ]
 }
 ```
