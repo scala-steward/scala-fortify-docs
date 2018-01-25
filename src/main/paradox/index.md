@@ -157,7 +157,7 @@ If you want to enable Fortify SCA in every subproject and you don't
 mind all of the translated files getting mixed together in the
 top-level `target` directory, then simply add `in ThisBuild` to the
 settings.
-[The sbt documentation on build-level settings](http://www.scala-sbt.org/0.13/docs/Scopes.html#Build-level+settings)
+[The sbt documentation on build-level settings](http://www.scala-sbt.org/1.x/docs/Scopes.html#Build-level+settings)
 for details on how this works.
 
 To enable Fortify on a particular subproject, and to keep that
@@ -169,7 +169,7 @@ If you want to do this across multiple subprojects without
 copy-and-paste, you can store the `libraryDependencies` and
 `scalacOptions` settings in a variable, and then add that variable in
 each subproject.  This technique is shown in
-[the sbt documentation on common settings](http://www.scala-sbt.org/0.13/docs/Multi-Project.html#Common+settings).
+[the sbt documentation on common settings](http://www.scala-sbt.org/1.x/docs/Multi-Project.html#Common+settings).
 The resulting build definition will look something like this:
 
     lazy val fortifySettings = Seq(
