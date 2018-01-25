@@ -251,6 +251,90 @@ tasks.withType(ScalaCompile) {
 }
 ```
 
+### When using with Play Framework
+
+Gradle also has [support for Play Framework](https://docs.gradle.org/current/userguide/play_plugin.html) and you mix both Fortify and Play configuration in your project, for example:
+
+
+```groovy
+plugins {
+    id 'play'
+    id 'scala'
+}
+
+ext {
+    playVersion = '2.6.11'
+    scalaVersion = '2.12.4'
+    scalaBinaryVersion = '2.12'
+    fortifyPluginVersion = '1.0.2'
+}
+
+model {
+    components {
+        play {
+            platform play: playVersion, scala: scalaBinaryVersion, java: '1.8'
+            injectedRoutesGenerator = true
+
+            sources {
+                twirlTemplates {
+                    defaultImports = TwirlImports.SCALA
+                }
+            }
+        }
+    }
+}
+
+configurations {
+    lightbendFortifyPlugin
+}
+
+dependencies {
+    // Example of play dependencies
+    play "com.typesafe.play:play-guice_$scalaBinaryVersion:$playVersion"
+    play "com.typesafe.play:play-ahc-ws_$scalaBinaryVersion:$playVersion"
+    play "com.typesafe.play:play-logback_$scalaBinaryVersion:$playVersion"
+    play "com.typesafe.play:filters-helpers_$scalaBinaryVersion:$playVersion"
+
+    lightbendFortifyPlugin group: 'com.lightbend', name: "scala-fortify_$scalaVersion", version: fortifyPluginVersion, classifier: "assembly"
+}
+
+repositories {
+    jcenter()
+    maven {
+        name "lightbend-maven-releases"
+        url "https://repo.lightbend.com/lightbend/maven-release"
+    }
+    ivy {
+        name "lightbend-ivy-release"
+        url "https://repo.lightbend.com/lightbend/ivy-releases"
+        layout "ivy"
+    }
+
+    // Fortify repository
+    ivy {
+        credentials {
+            username lightbendUser
+            password lightbendPassword
+        }
+        url = 'https://repo.lightbend.com/commercial-releases'
+        layout 'pattern', {
+            artifact '[organisation]/[module]/[revision]/[ext]s/[artifact](-[classifier]).[ext]' // by default gradle is missing `(-[classifier])`
+            ivy '[organisation]/[module]/[revision]/[artifact]/[artifact](.[ext])'
+        }
+    }
+}
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.additionalParameters = [
+            "-Xplugin:" + configurations.lightbendFortifyPlugin.asPath,
+            "-Xplugin-require:fortify",
+            "-P:fortify:build=play-webgoat"
+    ]
+}
+```
+
+You can also see a [sample application here](https://github.com/lightbend/play-webgoat).
+
 ## Getting and using the translator (manually)
 
 Prerequisite: install the Scala compiler
