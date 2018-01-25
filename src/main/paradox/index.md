@@ -239,7 +239,7 @@ configurations {
 
 dependencies {
     compile("org.scala-lang:scala-library:$scalaVersion") // specify Scala version
-    lightbendFortifyPlugin group: 'com.lightbend', name: "scala-fortify_$scalaBinaryVersion", version: fortifyPluginVersion, classifier: "assembly"
+    lightbendFortifyPlugin group: 'com.lightbend', name: "scala-fortify_$scalaVersion", version: fortifyPluginVersion, classifier: "assembly"
 }
 
 tasks.withType(ScalaCompile) {
