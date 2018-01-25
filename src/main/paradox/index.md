@@ -101,23 +101,28 @@ from https://portal.lightbend.com/ReactivePlatform/Credentials .
 
 And in your project's build definition, add:
 
-    credentials += Credentials(
-      Path.userHome / ".lightbend" / "commercial.credentials")
-    resolvers += Resolver.url(
-      "lightbend-commercial-releases",
-      new URL("http://repo.lightbend.com/commercial-releases/"))(
-      Resolver.ivyStylePatterns)
+```scala
+credentials += Credentials(
+  Path.userHome / ".lightbend" / "commercial.credentials")
+resolvers += Resolver.url(
+  "lightbend-commercial-releases",
+  new URL("http://repo.lightbend.com/commercial-releases/"))(
+  Resolver.ivyStylePatterns)
+```
 
 If the compiler plugin has already been mirrored to an internal repository at
 your organization, you can skip the preceding steps.
 
 Then, add the following to your top-level `build.sbt`:
 
-    addCompilerPlugin(
-      "com.lightbend" %% "scala-fortify" % "1.0.2"
-        classifier "assembly"
-        cross CrossVersion.patch)
-    scalacOptions += s"-P:fortify:build=myproject"
+```scala
+addCompilerPlugin(
+  "com.lightbend" %% "scala-fortify" % "1.0.2"
+    classifier "assembly"
+    cross CrossVersion.patch)
+
+scalacOptions += s"-P:fortify:build=myproject"
+```
 
 Substituting any build id you like for `myproject`.  Specifying the
 build id causes translated files to be written to the usual location
@@ -127,7 +132,9 @@ prefer to specify the output directory directly, use
 
 You may also want to add:
 
-    scalacOptions += "-Ystop-before:jvm"
+```scala
+scalacOptions += "-Ystop-before:jvm"
+```
 
 to make compilation stop before any actual JVM classfiles are
 generated.  (You can omit this if you want to let compilation
@@ -172,33 +179,37 @@ each subproject.  This technique is shown in
 [the sbt documentation on common settings](http://www.scala-sbt.org/1.x/docs/Multi-Project.html#Common+settings).
 The resulting build definition will look something like this:
 
-    lazy val fortifySettings = Seq(
-      libraryDependencies += ...,
-      scalacOptions += ...)
-    lazy val project1 = project ... (
-      .settings(fortifySettings,
-        // other settings
-      )
-    lazy val project2 = project ... (
-      .settings(fortifySettings,
-        // other settings
-      )
+```scala
+lazy val fortifySettings = Seq(
+  libraryDependencies += ...,
+  scalacOptions += ...)
+lazy val project1 = project ... (
+  .settings(fortifySettings,
+    // other settings
+  )
+lazy val project2 = project ... (
+  .settings(fortifySettings,
+    // other settings
+  )
+```
 
 ## Getting and using the translator (with Gradle)
 
 Here is a sample `build.gradle` file showing how to use the translator
-in a Gradle build.
+in a [Gradle](https://gradle.org/) build.
 
 It is assumed that your Lightbend credentials, retrieved from
 https://portal.lightbend.com/ReactivePlatform/Credentials,
 are in `~/.gradle/gradle.properties` as:
 
-    lightbendUser=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx@lightbend
-    lightbendPassword=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```properties
+lightbendUser=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx@lightbend
+lightbendPassword=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
 
 Sample `build.gradle`:
 
-```
+```groovy
 apply plugin: 'scala'
 
 repositories {
