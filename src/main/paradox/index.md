@@ -101,23 +101,28 @@ from https://portal.lightbend.com/ReactivePlatform/Credentials .
 
 And in your project's build definition, add:
 
-    credentials += Credentials(
-      Path.userHome / ".lightbend" / "commercial.credentials")
-    resolvers += Resolver.url(
-      "lightbend-commercial-releases",
-      new URL("http://repo.lightbend.com/commercial-releases/"))(
-      Resolver.ivyStylePatterns)
+```scala
+credentials += Credentials(
+  Path.userHome / ".lightbend" / "commercial.credentials")
+resolvers += Resolver.url(
+  "lightbend-commercial-releases",
+  new URL("http://repo.lightbend.com/commercial-releases/"))(
+  Resolver.ivyStylePatterns)
+```
 
 If the compiler plugin has already been mirrored to an internal repository at
 your organization, you can skip the preceding steps.
 
 Then, add the following to your top-level `build.sbt`:
 
-    addCompilerPlugin(
-      "com.lightbend" %% "scala-fortify" % "1.0.2"
-        classifier "assembly"
-        cross CrossVersion.patch)
-    scalacOptions += s"-P:fortify:build=myproject"
+```scala
+addCompilerPlugin(
+  "com.lightbend" %% "scala-fortify" % "1.0.2"
+    classifier "assembly"
+    cross CrossVersion.patch)
+
+scalacOptions += s"-P:fortify:build=myproject"
+```
 
 Substituting any build id you like for `myproject`.  Specifying the
 build id causes translated files to be written to the usual location
@@ -127,7 +132,9 @@ prefer to specify the output directory directly, use
 
 You may also want to add:
 
-    scalacOptions += "-Ystop-before:jvm"
+```scala
+scalacOptions += "-Ystop-before:jvm"
+```
 
 to make compilation stop before any actual JVM classfiles are
 generated.  (You can omit this if you want to let compilation
@@ -157,7 +164,7 @@ If you want to enable Fortify SCA in every subproject and you don't
 mind all of the translated files getting mixed together in the
 top-level `target` directory, then simply add `in ThisBuild` to the
 settings.
-[The sbt documentation on build-level settings](http://www.scala-sbt.org/0.13/docs/Scopes.html#Build-level+settings)
+[The sbt documentation on build-level settings](http://www.scala-sbt.org/1.x/docs/Scopes.html#Build-level+settings)
 for details on how this works.
 
 To enable Fortify on a particular subproject, and to keep that
@@ -169,36 +176,40 @@ If you want to do this across multiple subprojects without
 copy-and-paste, you can store the `libraryDependencies` and
 `scalacOptions` settings in a variable, and then add that variable in
 each subproject.  This technique is shown in
-[the sbt documentation on common settings](http://www.scala-sbt.org/0.13/docs/Multi-Project.html#Common+settings).
+[the sbt documentation on common settings](http://www.scala-sbt.org/1.x/docs/Multi-Project.html#Common+settings).
 The resulting build definition will look something like this:
 
-    lazy val fortifySettings = Seq(
-      libraryDependencies += ...,
-      scalacOptions += ...)
-    lazy val project1 = project ... (
-      .settings(fortifySettings,
-        // other settings
-      )
-    lazy val project2 = project ... (
-      .settings(fortifySettings,
-        // other settings
-      )
+```scala
+lazy val fortifySettings = Seq(
+  libraryDependencies += ...,
+  scalacOptions += ...)
+lazy val project1 = project ... (
+  .settings(fortifySettings,
+    // other settings
+  )
+lazy val project2 = project ... (
+  .settings(fortifySettings,
+    // other settings
+  )
+```
 
 ## Getting and using the translator (with Gradle)
 
 Here is a sample `build.gradle` file showing how to use the translator
-in a Gradle build.
+in a [Gradle](https://gradle.org/) build.
 
 It is assumed that your Lightbend credentials, retrieved from
 https://portal.lightbend.com/ReactivePlatform/Credentials,
 are in `~/.gradle/gradle.properties` as:
 
-    lightbendUser=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx@lightbend
-    lightbendPassword=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```properties
+lightbendUser=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx@lightbend
+lightbendPassword=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
 
 Sample `build.gradle`:
 
-```
+```groovy
 apply plugin: 'scala'
 
 repositories {
@@ -228,7 +239,7 @@ configurations {
 
 dependencies {
     compile("org.scala-lang:scala-library:$scalaVersion") // specify Scala version
-    lightbendFortifyPlugin group: 'com.lightbend', name: "scala-fortify_$scalaBinaryVersion", version: fortifyPluginVersion, classifier: "assembly"
+    lightbendFortifyPlugin group: 'com.lightbend', name: "scala-fortify_$scalaVersion", version: fortifyPluginVersion, classifier: "assembly"
 }
 
 tasks.withType(ScalaCompile) {
@@ -239,6 +250,90 @@ tasks.withType(ScalaCompile) {
   ]
 }
 ```
+
+### When using with Play Framework
+
+Gradle also has [support for Play Framework](https://docs.gradle.org/current/userguide/play_plugin.html) and you mix both Fortify and Play configuration in your project, for example:
+
+
+```groovy
+plugins {
+    id 'play'
+    id 'scala'
+}
+
+ext {
+    playVersion = '2.6.11'
+    scalaVersion = '2.12.4'
+    scalaBinaryVersion = '2.12'
+    fortifyPluginVersion = '1.0.2'
+}
+
+model {
+    components {
+        play {
+            platform play: playVersion, scala: scalaBinaryVersion, java: '1.8'
+            injectedRoutesGenerator = true
+
+            sources {
+                twirlTemplates {
+                    defaultImports = TwirlImports.SCALA
+                }
+            }
+        }
+    }
+}
+
+configurations {
+    lightbendFortifyPlugin
+}
+
+dependencies {
+    // Example of play dependencies
+    play "com.typesafe.play:play-guice_$scalaBinaryVersion:$playVersion"
+    play "com.typesafe.play:play-ahc-ws_$scalaBinaryVersion:$playVersion"
+    play "com.typesafe.play:play-logback_$scalaBinaryVersion:$playVersion"
+    play "com.typesafe.play:filters-helpers_$scalaBinaryVersion:$playVersion"
+
+    lightbendFortifyPlugin group: 'com.lightbend', name: "scala-fortify_$scalaVersion", version: fortifyPluginVersion, classifier: "assembly"
+}
+
+repositories {
+    jcenter()
+    maven {
+        name "lightbend-maven-releases"
+        url "https://repo.lightbend.com/lightbend/maven-release"
+    }
+    ivy {
+        name "lightbend-ivy-release"
+        url "https://repo.lightbend.com/lightbend/ivy-releases"
+        layout "ivy"
+    }
+
+    // Fortify repository
+    ivy {
+        credentials {
+            username lightbendUser
+            password lightbendPassword
+        }
+        url = 'https://repo.lightbend.com/commercial-releases'
+        layout 'pattern', {
+            artifact '[organisation]/[module]/[revision]/[ext]s/[artifact](-[classifier]).[ext]' // by default gradle is missing `(-[classifier])`
+            ivy '[organisation]/[module]/[revision]/[artifact]/[artifact](.[ext])'
+        }
+    }
+}
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.additionalParameters = [
+            "-Xplugin:" + configurations.lightbendFortifyPlugin.asPath,
+            "-Xplugin-require:fortify",
+            "-P:fortify:build=play-webgoat"
+    ]
+}
+```
+
+You can also see a [sample application here](https://github.com/lightbend/play-webgoat).
 
 ## Getting and using the translator (manually)
 
