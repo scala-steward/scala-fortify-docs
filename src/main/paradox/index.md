@@ -28,22 +28,15 @@ January 2018).
 To translate Scala code for Fortify to scan, you must be a current
 Lightbend subscriber.
 
-To actually scan translated code for vulnerabilities, you must be a
-licensed Fortify SCA user. Fortify SCA version 17.20 (or newer)
-is required.
+To actually scan translated code for vulnerabilities, you must either:
+
+* be a licensed Fortify SCA user. Fortify SCA version 17.20 (or newer)
+  is required
+* or, use Fortify on Demand (see below for details)
 
 ## Supported language features
 
 All of Scala is supported by the translator.
-
-## Fortify on Demand
-
-[Micro Focus Fortify on Demand](https://software.microfocus.com/en-us/products/application-security-testing/overview),
-version 17.4, also supports Scala. Please see the Fortify on Demand
-documentation for more information on preparing Scala applications. To
-access the documentation, log in to Fortify on Demand, select
-Documentation from the account menu, and run a search for "Preparing
-Scala Application Files".
 
 ## License installation
 
@@ -386,6 +379,22 @@ If you are using a build tool other than sbt, then:
 * Use whatever your build tool's mechanism is for customizing the
   options passed to scalac, and pass the additional options shown in
   the previous section.
+
+## Fortify on Demand
+
+[Micro Focus Fortify on Demand](https://software.microfocus.com/en-us/products/application-security-testing/overview),
+version 17.4, supports Scala.
+
+To submit something to Fortify on Demand, you need to generate a
+Mobile Build Session (`.mbs`) file.  After translating your
+Scala code with `-P:fortify:build=...` enabled, you run
+`sourceanalyzer -b <build-id> -export-build-session <file.mbs>`
+to generate a session file suitable for upload.
+
+Please see the Fortify on Demand documentation for more information on
+preparing Scala applications. To access the documentation, log in to
+Fortify on Demand, select Documentation from the account menu, and run
+a search for "Preparing Scala Application Files".
 
 ## Known issues
 
