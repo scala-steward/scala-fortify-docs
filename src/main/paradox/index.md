@@ -19,7 +19,7 @@ The following Java Virtual Machine versions are supported:
 
 The following Scala versions are supported:
 
-- Scala 2.11.12, 2.11.11, 2.11.8
+- Scala 2.11.12, 2.11.11, 2.11.8, 2.11.7, 2.11.6
 - Scala 2.12.4, 2.12.3
 
 The latest patch releases are recommended (2.11.12 and 2.12.4, as of
@@ -110,7 +110,7 @@ Then, add the following to your top-level `build.sbt`:
 
 ```scala
 addCompilerPlugin(
-  "com.lightbend" %% "scala-fortify" % "1.0.2"
+  "com.lightbend" %% "scala-fortify" % "1.0.4"
     classifier "assembly"
     cross CrossVersion.patch)
 
@@ -223,7 +223,7 @@ repositories {
 ext {
     scalaBinaryVersion = '2.12'
     scalaVersion = '2.12.4'
-    fortifyPluginVersion = '1.0.2'
+    fortifyPluginVersion = '1.0.4'
 }
 
 configurations {
@@ -259,7 +259,7 @@ ext {
     playVersion = '2.6.11'
     scalaVersion = '2.12.4'
     scalaBinaryVersion = '2.12'
-    fortifyPluginVersion = '1.0.2'
+    fortifyPluginVersion = '1.0.4'
 }
 
 model {
@@ -340,7 +340,7 @@ Using the username and password that you retrieve
 from https://portal.lightbend.com/ReactivePlatform/Credentials ,
 you can download the compiler plugin JAR from:
 
-    https://lightbend.bintray.com/commercial-releases/com.lightbend/scala-fortify_2.12.4/1.0.2/jars/scala-fortify_2.12.4-assembly.jar
+    https://lightbend.bintray.com/commercial-releases/com.lightbend/scala-fortify_2.12.4/1.0.4/jars/scala-fortify_2.12.4-assembly.jar
 
 Then, supposing you have `scala-fortify_2.12.4-assembly.jar` in your
 current working directory, you can do e.g.:
@@ -426,6 +426,10 @@ or Micro Focus.
   compiler plugin. (issue 215)
 
 ## Release notes
+
+### 1.0.4 (February 1, 2018)
+
+* Scala 2.11.6 and 2.11.7 are now supported (issue 217)
 
 ### 1.0.2 (January 11, 2018)
 

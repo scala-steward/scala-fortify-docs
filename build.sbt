@@ -1,6 +1,6 @@
 organization := "com.lightbend"
 name := "scala-fortify-guide"
-version := "1.0.2"
+version := "1.0.4"
 enablePlugins(ParadoxPlugin)
 
 // techhub will override with the Lightbend theme, which is only
