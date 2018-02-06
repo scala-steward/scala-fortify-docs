@@ -38,6 +38,10 @@ To actually scan translated code for vulnerabilities, you must either:
 
 All of Scala is supported by the translator.
 
+## Supported security vulnerabities
+
+Consult [this list](https://vulncat.fortify.com/en/weakness?codelang=Scala).
+
 ## License installation
 
 The license file for using the Scala translator is a standard Lightbend
