@@ -4,6 +4,14 @@ This page documents Scala support in Fortify SCA.  For an
 overview of Fortify SCA in general,
 [visit this Micro Focus page](https://software.microfocus.com/en-us/products/static-code-analysis-sast/overview).
 
+## Supported language features
+
+All of Scala is supported by the translator.
+
+## Supported security vulnerabities
+
+Consult [this list](https://vulncat.fortify.com/en/weakness?codelang=Scala).
+
 ## Requirements
 
 This release supports translating and scanning Scala source code on
@@ -19,11 +27,11 @@ The following Java Virtual Machine versions are supported:
 
 The following Scala versions are supported:
 
-- Scala 2.11.12, 2.11.11, 2.11.8, 2.11.7, 2.11.6
-- Scala 2.12.4, 2.12.3
+- Scala 2.11.6 or newer
+- Scala 2.12.3 or newer
 
 The latest patch releases are recommended (2.11.12 and 2.12.4, as of
-January 2018).
+February 2018).
 
 To translate Scala code for Fortify to scan, you must be a current
 Lightbend subscriber.
@@ -33,14 +41,6 @@ To actually scan translated code for vulnerabilities, you must either:
 * be a licensed Fortify SCA user. Fortify SCA version 17.20 (or newer)
   is required
 * or, use Fortify on Demand (see below for details)
-
-## Supported language features
-
-All of Scala is supported by the translator.
-
-## Supported security vulnerabities
-
-Consult [this list](https://vulncat.fortify.com/en/weakness?codelang=Scala).
 
 ## License installation
 
