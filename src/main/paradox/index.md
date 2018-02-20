@@ -10,7 +10,7 @@ All of Scala is supported by the translator.
 
 ## Supported security vulnerabities
 
-Consult [this list](https://vulncat.fortify.com/en/weakness?codelang=Scala).
+Consult [this list](https://vulncat.hpefod.com/en/weakness?codelang=Java%2fJSP;Scala).
 
 ## Requirements
 
