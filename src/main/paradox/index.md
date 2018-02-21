@@ -149,7 +149,7 @@ scanner to find the translated files.  For example:
 ### Multi-project builds
 
 If your build has subprojects, then you'll need to adapt the
-above `libraryDependencies += ...` and `scalacOptions += ...`
+above `addCompilerPlugin(...)` and `scalacOptions += ...`
 settings accordingly.  (By default, the settings will apply
 only to your root project.)
 
@@ -166,11 +166,11 @@ for details on how this works.
 
 To enable Fortify on a particular subproject, and to keep that
 subproject's translated files in their own `target` directory,
-add the `libraryDependencies` and `scalacOptions` to those
+add the `addCompilerPlugin` and `scalacOptions` to those
 subprojects only.
 
 If you want to do this across multiple subprojects without
-copy-and-paste, you can store the `libraryDependencies` and
+copy-and-paste, you can store the `addCompilerPlugin` and
 `scalacOptions` settings in a variable, and then add that variable in
 each subproject.  This technique is shown in
 [the sbt documentation on common settings](http://www.scala-sbt.org/1.x/docs/Multi-Project.html#Common+settings).
@@ -178,7 +178,7 @@ The resulting build definition will look something like this:
 
 ```scala
 lazy val fortifySettings = Seq(
-  libraryDependencies += ...,
+  addCompilerPlugin(...),
   scalacOptions += ...)
 lazy val project1 = project ... (
   .settings(fortifySettings,
