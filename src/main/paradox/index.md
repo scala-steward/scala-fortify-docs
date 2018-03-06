@@ -114,7 +114,7 @@ Then, add the following to your top-level `build.sbt`:
 
 ```scala
 addCompilerPlugin(
-  "com.lightbend" %% "scala-fortify" % "1.0.5"
+  "com.lightbend" %% "scala-fortify" % "1.0.6"
     classifier "assembly"
     cross CrossVersion.patch)
 
@@ -227,7 +227,7 @@ repositories {
 ext {
     scalaBinaryVersion = '2.12'
     scalaVersion = '2.12.4'
-    fortifyPluginVersion = '1.0.5'
+    fortifyPluginVersion = '1.0.6'
 }
 
 configurations {
@@ -263,7 +263,7 @@ ext {
     playVersion = '2.6.11'
     scalaVersion = '2.12.4'
     scalaBinaryVersion = '2.12'
-    fortifyPluginVersion = '1.0.5'
+    fortifyPluginVersion = '1.0.6'
 }
 
 model {
@@ -344,7 +344,7 @@ Using the username and password that you retrieve
 from https://portal.lightbend.com/ReactivePlatform/Credentials ,
 you can download the compiler plugin JAR from:
 
-    https://lightbend.bintray.com/commercial-releases/com.lightbend/scala-fortify_2.12.4/1.0.5/jars/scala-fortify_2.12.4-assembly.jar
+    https://lightbend.bintray.com/commercial-releases/com.lightbend/scala-fortify_2.12.4/1.0.6/jars/scala-fortify_2.12.4-assembly.jar
 
 Then, supposing you have `scala-fortify_2.12.4-assembly.jar` in your
 current working directory, you can do e.g.:
@@ -430,6 +430,10 @@ or Micro Focus.
   compiler plugin. (issue 215)
 
 ## Release notes
+
+### 1.0.6 (March 5, 2018)
+
+* add experimental support for Scala 2.13.0-M3
 
 ### 1.0.5 (February 7, 2018)
 
