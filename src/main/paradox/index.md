@@ -101,10 +101,8 @@ And in your project's build definition, add:
 ```scala
 credentials += Credentials(
   Path.userHome / ".lightbend" / "commercial.credentials")
-resolvers += Resolver.url(
-  "lightbend-commercial-releases",
-  new URL("http://repo.lightbend.com/commercial-releases/"))(
-  Resolver.ivyStylePatterns)
+resolvers += "lightbend-commercial-releases" at
+  "https://repo.lightbend.com/commercial-releases/"
 ```
 
 If the compiler plugin has already been mirrored to an internal repository at
@@ -114,10 +112,9 @@ Then, add the following to your top-level `build.sbt`:
 
 ```scala
 addCompilerPlugin(
-  "com.lightbend" %% "scala-fortify" % "1.0.6"
+  "com.lightbend" %% "scala-fortify" % "1.0.7"
     classifier "assembly"
     cross CrossVersion.patch)
-
 scalacOptions += s"-P:fortify:build=myproject"
 ```
 
@@ -211,23 +208,19 @@ apply plugin: 'scala'
 
 repositories {
     mavenCentral()
-    ivy {
+    maven {
         credentials {
             username lightbendUser
             password lightbendPassword
         }
-        url = 'https://repo.lightbend.com/commercial-releases'
-        layout 'pattern', {
-          artifact '[organisation]/[module]/[revision]/[ext]s/[artifact](-[classifier]).[ext]' // by default gradle is missing `(-[classifier])`
-          ivy '[organisation]/[module]/[revision]/[artifact]/[artifact](.[ext])'
-        }
+        url = 'https://repo.lightbend.com/commercial-releases/'
     }
 }
 
 ext {
     scalaBinaryVersion = '2.12'
     scalaVersion = '2.12.4'
-    fortifyPluginVersion = '1.0.6'
+    fortifyPluginVersion = '1.0.7'
 }
 
 configurations {
@@ -260,10 +253,10 @@ plugins {
 }
 
 ext {
-    playVersion = '2.6.11'
+    playVersion = '2.6.12'
     scalaVersion = '2.12.4'
     scalaBinaryVersion = '2.12'
-    fortifyPluginVersion = '1.0.6'
+    fortifyPluginVersion = '1.0.7'
 }
 
 model {
@@ -308,16 +301,12 @@ repositories {
     }
 
     // Fortify repository
-    ivy {
+    maven {
         credentials {
             username lightbendUser
             password lightbendPassword
         }
         url = 'https://repo.lightbend.com/commercial-releases'
-        layout 'pattern', {
-            artifact '[organisation]/[module]/[revision]/[ext]s/[artifact](-[classifier]).[ext]' // by default gradle is missing `(-[classifier])`
-            ivy '[organisation]/[module]/[revision]/[artifact]/[artifact](.[ext])'
-        }
     }
 }
 
@@ -344,7 +333,7 @@ Using the username and password that you retrieve
 from https://portal.lightbend.com/ReactivePlatform/Credentials ,
 you can download the compiler plugin JAR from:
 
-    https://lightbend.bintray.com/commercial-releases/com.lightbend/scala-fortify_2.12.4/1.0.6/jars/scala-fortify_2.12.4-assembly.jar
+    https://repo.lightbend.com/commercial-releases/com/lightbend/scala-fortify_2.12.4/1.0.7/scala-fortify_2.12.4-1.0.7-assembly.jar
 
 Then, supposing you have `scala-fortify_2.12.4-assembly.jar` in your
 current working directory, you can do e.g.:
@@ -430,6 +419,12 @@ or Micro Focus.
   compiler plugin. (issue 215)
 
 ## Release notes
+
+### 1.0.7 (March 14, 2018)
+
+* emit fewer "Value Never Read" false positives (issue 258 (partial fix))
+* plugin is now published Maven-style, not Ivy-style; as a result,
+  build configuration instructions have changed (issue 277)
 
 ### 1.0.6 (March 5, 2018)
 
