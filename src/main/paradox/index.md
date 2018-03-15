@@ -396,6 +396,11 @@ or Micro Focus.
 
 * Java 6, 7, and 9 may work but are not currently officially
   supported. (issue 222, issue 223)
+* Enabling the plugin may cause the Scala compiler to require
+  transitive dependencies to be present on the classpath that
+  weren't required before for compilation to succeed; the usual error
+  message is "missing or invalid dependency detected while loading
+  class file" (issue 279)
 * Issues found in Twirl templates are reported as occurring in the
   generated `.scala` file, not in the original template. (issue 159)
 * Mixed Scala and Java codebases require separately translating
