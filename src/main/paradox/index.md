@@ -422,9 +422,9 @@ or Micro Focus.
 
 ### 1.0.7 (March 14, 2018)
 
-* emit fewer "Value Never Read" false positives (issue 258 (partial fix))
 * plugin is now published Maven-style, not Ivy-style; as a result,
-  build configuration instructions have changed (issue 277)
+  build configuration instructions have [changed](https://github.com/lightbend/scala-fortify-docs/commit/d70499f7b2aad4df6fcc868941917e64f51df35b) (issue 277)
+* emit fewer "Value Never Read" false positives (issue 258 (partial fix))
 
 ### 1.0.6 (March 5, 2018)
 
