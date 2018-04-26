@@ -112,7 +112,7 @@ Then, add the following to your top-level `build.sbt`:
 
 ```scala
 addCompilerPlugin(
-  "com.lightbend" %% "scala-fortify" % "1.0.7"
+  "com.lightbend" %% "scala-fortify" % "1.0.8"
     classifier "assembly"
     cross CrossVersion.patch)
 scalacOptions += s"-P:fortify:build=myproject"
@@ -220,7 +220,7 @@ repositories {
 ext {
     scalaBinaryVersion = '2.12'
     scalaVersion = '2.12.5'
-    fortifyPluginVersion = '1.0.7'
+    fortifyPluginVersion = '1.0.8'
 }
 
 configurations {
@@ -256,7 +256,7 @@ ext {
     playVersion = '2.6.12'
     scalaVersion = '2.12.5'
     scalaBinaryVersion = '2.12'
-    fortifyPluginVersion = '1.0.7'
+    fortifyPluginVersion = '1.0.8'
 }
 
 model {
@@ -333,7 +333,7 @@ Using the username and password that you retrieve
 from https://portal.lightbend.com/ReactivePlatform/Credentials ,
 you can download the compiler plugin JAR from:
 
-    https://repo.lightbend.com/commercial-releases/com/lightbend/scala-fortify_2.12.5/1.0.7/scala-fortify_2.12.5-1.0.7-assembly.jar
+    https://repo.lightbend.com/commercial-releases/com/lightbend/scala-fortify_2.12.5/1.0.8/scala-fortify_2.12.5-1.0.8-assembly.jar
 
 Then, supposing you have `scala-fortify_2.12.5-assembly.jar` in your
 current working directory, you can do e.g.:
@@ -424,6 +424,10 @@ or Micro Focus.
   compiler plugin. (issue 215)
 
 ## Release notes
+
+### 1.0.8 (April 26, 2018)
+
+* vulnerabilities involving Twirl templates are now reported as occurring in the original `.html` file, not the generated `.scala` file
 
 ### 1.0.7 (March 14, 2018)
 
