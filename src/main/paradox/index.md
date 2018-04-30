@@ -38,8 +38,8 @@ Lightbend subscriber.
 
 To actually scan translated code for vulnerabilities, you must either:
 
-* be a licensed Fortify SCA user. Fortify SCA version 17.20 (or newer)
-  is required
+* be a licensed Fortify SCA user. Fortify SCA version 18.10 or newer
+  is recommended; 17.20 or newer is required
 * or, use Fortify on Demand (see below for details)
 
 ## License installation
@@ -120,7 +120,7 @@ scalacOptions += s"-P:fortify:build=myproject"
 
 Substituting any build id you like for `myproject`.  Specifying the
 build id causes translated files to be written to the usual location
-used by SCA (`$HOME/.fortify/sca17.2/build/myproject`).  (If you
+used by SCA (`$HOME/.fortify/sca18.1/build/myproject`).  (If you
 prefer to specify the output directory directly, use
 `-P:fortify:out=...` instead, filling in a filesystem path for `...`.)
 
@@ -348,12 +348,12 @@ Substituting your own build id for `myproject`.  (Or, use the
 `-P:fortify:out=...` to specify the output directory directly.)
 
 When build id support is enabled, it is currently assumed that
-you are running a version of Fortify SCA in the 17.2 series,
-so that translated files are written to `~/.fortify/sca17.2`.
+you are running a version of Fortify SCA in the 18.1 series,
+so that translated files are written to `~/.fortify/sca18.1`.
 If you are using some other version of Fortify SCA, for
-example some version in the 18.1 series, add e.g.:
+example some version in the 19.1 series, add e.g.:
 
-    -P:fortify:scaversion=18.1
+    -P:fortify:scaversion=19.1
 
 Including `-Ystop-before:jvm`, as shown above, makes compilation stop
 before any actual JVM classfiles are generated.  You can also
