@@ -112,7 +112,7 @@ Then, add the following to your top-level `build.sbt`:
 
 ```scala
 addCompilerPlugin(
-  "com.lightbend" %% "scala-fortify" % "1.0.8"
+  "com.lightbend" %% "scala-fortify" % "1.0.9"
     classifier "assembly"
     cross CrossVersion.patch)
 scalacOptions += s"-P:fortify:build=myproject"
@@ -220,7 +220,7 @@ repositories {
 ext {
     scalaBinaryVersion = '2.12'
     scalaVersion = '2.12.6'
-    fortifyPluginVersion = '1.0.8'
+    fortifyPluginVersion = '1.0.9'
 }
 
 configurations {
@@ -256,7 +256,7 @@ ext {
     playVersion = '2.6.12'
     scalaVersion = '2.12.6'
     scalaBinaryVersion = '2.12'
-    fortifyPluginVersion = '1.0.8'
+    fortifyPluginVersion = '1.0.9'
 }
 
 model {
@@ -333,7 +333,7 @@ Using the username and password that you retrieve
 from https://portal.lightbend.com/ReactivePlatform/Credentials ,
 you can download the compiler plugin JAR from:
 
-    https://repo.lightbend.com/commercial-releases/com/lightbend/scala-fortify_2.12.6/1.0.8/scala-fortify_2.12.6-1.0.8-assembly.jar
+    https://repo.lightbend.com/commercial-releases/com/lightbend/scala-fortify_2.12.6/1.0.9/scala-fortify_2.12.6-1.0.9-assembly.jar
 
 Then, supposing you have `scala-fortify_2.12.6-assembly.jar` in your
 current working directory, you can do e.g.:
@@ -424,6 +424,12 @@ or Micro Focus.
   compiler plugin. (issue 215)
 
 ## Release notes
+
+### 1.0.9 (April 30, 2018)
+
+* recommended version of Fortify SCA is now 18.10 (formerly 17.20).
+* by default, files are now written to `~/.fortify/sca18.1`
+  (formerly `~/.fortify/sca17.2`)
 
 ### 1.0.8 (April 26, 2018)
 
