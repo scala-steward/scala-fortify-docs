@@ -394,23 +394,17 @@ a search for "Preparing Scala Application Files".
 To report an issue, please open a support ticket with either Lightbend
 or Micro Focus.
 
-* Java 6, 7, and 9 may work but are not currently officially
+* Java 6, 7, 9, and 10 may work but are not currently officially
   supported. (issue 222, issue 223)
 * Enabling the plugin may cause the Scala compiler to require
   transitive dependencies to be present on the classpath that
   weren't required before for compilation to succeed; the usual error
   message is "missing or invalid dependency detected while loading
   class file" (issue 279)
-* Issues found in Twirl templates are reported as occurring in the
-  generated `.scala` file, not in the original template. (issue 159)
 * Mixed Scala and Java codebases require separately translating
   the Scala and Java sources. Depending on the dependency structure
   of the code, not all issues involving both languages may be found.
   (issue 180)
-* Some kinds of user code cause "There is more than one class named
-  'scala.PartialFunction'" warnings to be printed.  We expect the
-  problem to be fixed in the forthcoming SCA 18.10 release.
-  (issue 239)
 * Some pattern matches may produce spurious
   "Dead Code : Expression is Always false" reports. (issue 221)
 * Use of `do ... while` may produce spurious
