@@ -351,9 +351,9 @@ When build id support is enabled, it is currently assumed that
 you are running a version of Fortify SCA in the 18.1 series,
 so that translated files are written to `~/.fortify/sca18.1`.
 If you are using some other version of Fortify SCA, for
-example some version in the 19.1 series, add e.g.:
+example some version in the 17.2 series, add e.g.:
 
-    -P:fortify:scaversion=19.1
+    -P:fortify:scaversion=17.2
 
 Including `-Ystop-before:jvm`, as shown above, makes compilation stop
 before any actual JVM classfiles are generated.  You can also
