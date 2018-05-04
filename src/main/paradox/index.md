@@ -10,7 +10,14 @@ All of Scala is supported by the translator.
 
 ## Supported security vulnerabities
 
-Consult [this list](https://vulncat.fortify.com/en/weakness?codelang=Java%2fJSP;Scala).
+A [full list](https://vulncat.fortify.com/en/weakness?codelang=Java%2fJSP;Scala) is available on the Micro Focus site.
+
+## Sample project
+
+The [play-webgoat](https://github.com/playframework/play-webgoat/tree/fortify)
+repository contains an example web app that uses the Play framework.  The
+`fortify` branch is configured for use with Fortify SCA.
+[Here is a list](https://github.com/playframework/play-webgoat/blob/fortify/vulnerabilities.txt) of the vulnerabilities Fortify finds there.
 
 ## Requirements
 
