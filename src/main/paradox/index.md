@@ -8,7 +8,7 @@ overview of Fortify SCA in general,
 
 All of Scala is supported by the translator.
 
-## Supported security vulnerabities
+## Supported security vulnerabilities
 
 A [full list](https://vulncat.fortify.com/en/weakness?codelang=Java%2fJSP;Scala) is available on the Micro Focus site.
 
