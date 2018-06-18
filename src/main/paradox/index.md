@@ -380,6 +380,69 @@ If you are using a build tool other than sbt, then:
   options passed to scalac, and pass the additional options shown in
   the previous section.
 
+## About transitive dependencies
+
+The information in this section is applicable regardless of which build
+tool you are using.
+
+Enabling the compiler plugin as instructed above may cause the Scala
+compiler to require transitive dependencies to be present on the
+classpath that weren't previously required for compilation to succeed.
+
+### What are the symptoms?
+
+Several different error messages can indicate this is happening:
+
+* "missing or invalid dependency detected while loading class file;
+  could not access type b in package a because it (or its
+  dependencies) are missing"
+* "symbol 'a.b.c' is missing from the classpath. This symbol is
+  required by 'd.e.f'. Make sure that a.b.c is in your classpath"
+* "class a.b.c not found - continuing with a stub"
+
+### Why is this happening?
+
+In Scala, if your code depends on library A and library A depends on
+library B, but your code only directly mentions things in A, then it
+may or may not be necessary for B to be on the classpath when you
+compile your code.
+
+It is not easy to characterize the exact circumstances under which B
+must be on the classapth or not. (For those interested, the situation
+is described in further detail in
+[SCP-009](https://github.com/scalacenter/advisoryboard/blob/master/proposals/009-improve-direct-dependency-experience.md).)
+
+In order to satisfy Fortify's requirements, the compiler plugin
+analyze code more deeply than occurs during ordinary compilation.
+This is why enabling the plugin can cause these errors.
+
+Normally your build tool should take care of putting B on your
+compile-time classpath when you add a dependency on A. So how would a
+situation arise where B isn't on the compile-time classpath? Possible
+scenarios include:
+
+* A's dependency on B was intentionally declared as `provided`. This
+  declaration "indicates you expect the JDK or a container to provide
+  the dependency at runtime"
+  ([reference](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html))
+* A inadvertently declared its dependencies incorrectly
+* You left B off the classpath on purpose to improve compile-time
+  performance (as described in SCP-009)
+
+### How to fix it?
+
+Regardless of the exact cause, the fix is the same.  The compiler
+error message includes the name of the missing class.  You need to
+determine what JAR contains that class, and add it to the
+compile-time classpath.
+
+The details of how to add dependencies to the classpath differ
+depending on what build tool you are using.
+
+If you believe that the additional dependencies should only be
+needed at compile-time and should not be present at runtime,
+you may declare them as "provided".
+
 ## Fortify on Demand
 
 [Micro Focus Fortify on Demand](https://software.microfocus.com/en-us/products/application-security-testing/overview),
@@ -405,9 +468,9 @@ or Micro Focus.
   supported. (issue 222, issue 223)
 * Enabling the plugin may cause the Scala compiler to require
   transitive dependencies to be present on the classpath that
-  weren't required before for compilation to succeed; the usual error
-  message is "missing or invalid dependency detected while loading
-  class file" (issue 279)
+  weren't required before for compilation to succeed.  This is
+  described in detail in the "About transitive dependencies"
+  section above (issue 279)
 * Mixed Scala and Java codebases require separately translating
   the Scala and Java sources. Depending on the dependency structure
   of the code, not all issues involving both languages may be found.
