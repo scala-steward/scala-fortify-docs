@@ -119,7 +119,7 @@ Then, add the following to your top-level `build.sbt`:
 
 ```scala
 addCompilerPlugin(
-  "com.lightbend" %% "scala-fortify" % "1.0.10"
+  "com.lightbend" % "scala-fortify" % "1.0.10"
     classifier "assembly"
     cross CrossVersion.patch)
 scalacOptions += s"-P:fortify:build=myproject"
