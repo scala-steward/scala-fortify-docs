@@ -491,10 +491,10 @@ or Micro Focus.
 
 ### 1.0.12 (October 2, 2018)
 
-* improved tracking of data flow through trait methods (#297)
-* improved tracking of data flow across multiple source files (#302)
+* improved tracking of data flow through trait methods (issue 297)
+* improved tracking of data flow across multiple source files (issue 302)
 * improved accuracy of line number information in reported vulnerabilities
-  (#301)
+  (issue 301)
 
 ### 1.0.11 (July 12, 2018)
 
