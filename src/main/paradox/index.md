@@ -464,11 +464,12 @@ a search for "Preparing Scala Application Files".
 To report an issue, please open a support ticket with either Lightbend
 or Micro Focus.
 
-* Java 6, 7, 9, and 10 may work but are not currently officially
-  supported. (issue 222, issue 223)
+* other Java versions besides Java 8 (such as 6, 7, 9, 10, 11) may
+  work but are not currently officially supported. (issue 222, issue
+  223)
 * Enabling the plugin may cause the Scala compiler to require
   transitive dependencies to be present on the classpath that
-  weren't required before for compilation to succeed.  This is
+  weren't required during ordinary compilation.  This is
   described in detail in the "About transitive dependencies"
   section above (issue 279)
 * Mixed Scala and Java codebases require separately translating
