@@ -512,7 +512,7 @@ or Micro Focus.
 
 ### 1.0.8 (April 26, 2018)
 
-* vulnerabilities involving Twirl templates are now reported as occurring in the original `.html` file, not the generated `.scala` file
+* vulnerabilities involving Twirl templates are now reported as occurring in the original `.html` file, not the generated `.scala` file (issue 159)
 
 ### 1.0.7 (March 14, 2018)
 
