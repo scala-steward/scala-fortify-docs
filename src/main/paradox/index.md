@@ -37,8 +37,8 @@ The following Scala versions are supported:
 - Scala 2.11.6 or newer
 - Scala 2.12.3 or newer
 
-The latest patch releases are recommended (2.11.12 and 2.12.6, as of
-April 2018).
+The latest patch releases are recommended (2.11.12 and 2.12.7, as of
+October 2018).
 
 To translate Scala code for Fortify to scan, you must be a current
 Lightbend subscriber.
@@ -119,7 +119,7 @@ Then, add the following to your top-level `build.sbt`:
 
 ```scala
 addCompilerPlugin(
-  "com.lightbend" % "scala-fortify" % "1.0.11"
+  "com.lightbend" % "scala-fortify" % "1.0.12"
     classifier "assembly"
     cross CrossVersion.patch)
 scalacOptions += s"-P:fortify:build=myproject"
@@ -226,8 +226,8 @@ repositories {
 
 ext {
     scalaBinaryVersion = '2.12'
-    scalaVersion = '2.12.6'
-    fortifyPluginVersion = '1.0.11'
+    scalaVersion = '2.12.7'
+    fortifyPluginVersion = '1.0.12'
 }
 
 configurations {
@@ -261,9 +261,9 @@ plugins {
 
 ext {
     playVersion = '2.6.12'
-    scalaVersion = '2.12.6'
+    scalaVersion = '2.12.7'
     scalaBinaryVersion = '2.12'
-    fortifyPluginVersion = '1.0.11'
+    fortifyPluginVersion = '1.0.12'
 }
 
 model {
@@ -334,18 +334,18 @@ Prerequisite: install the Scala compiler
 ([link](https://www.scala-lang.org/download/)).
 
 In the following instructions, substitute the actual full Scala 2.11.x
-or 2.12.x version you are using; we use 2.12.6 as the example version.
+or 2.12.x version you are using; we use 2.12.7 as the example version.
 
 Using the username and password that you retrieve
 from https://portal.lightbend.com/ReactivePlatform/Credentials ,
 you can download the compiler plugin JAR from:
 
-    https://repo.lightbend.com/commercial-releases/com/lightbend/scala-fortify_2.12.6/1.0.11/scala-fortify_2.12.6-1.0.11-assembly.jar
+    https://repo.lightbend.com/commercial-releases/com/lightbend/scala-fortify_2.12.7/1.0.12/scala-fortify_2.12.7-1.0.12-assembly.jar
 
-Then, supposing you have `scala-fortify_2.12.6-assembly.jar` in your
+Then, supposing you have `scala-fortify_2.12.7-assembly.jar` in your
 current working directory, you can do e.g.:
 
-    scalac -Xplugin:scala-fortify_2.12.6-assembly.jar \
+    scalac -Xplugin:scala-fortify_2.12.7-assembly.jar \
       -Xplugin-require:fortify \
       -Ystop-before:jvm \
       -P:fortify:build=myproject \
@@ -488,6 +488,13 @@ or Micro Focus.
   compiler plugin. (issue 215)
 
 ## Release notes
+
+### 1.0.12 (October 2, 2018)
+
+* improved tracking of data flow through trait methods (#297)
+* improved tracking of data flow across multiple source files (#302)
+* improved accuracy of line number information in reported vulnerabilities
+  (#301)
 
 ### 1.0.11 (July 12, 2018)
 
