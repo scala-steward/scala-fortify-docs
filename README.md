@@ -1,5 +1,5 @@
 the documentation in this repository is published to
-https://developer.lightbend.com/docs/fortify/latest/
+https://developer.lightbend.com/docs/fortify/current/
 
 issues are disabled in this repo. pull requests are welcome. if you have a question or suggestion, please open a Lightbend support ticket.
 
