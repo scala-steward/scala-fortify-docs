@@ -45,7 +45,7 @@ Lightbend subscriber.
 
 To actually scan translated code for vulnerabilities, you must either:
 
-* be a licensed Fortify SCA user. Fortify SCA version 18.10 or newer
+* be a licensed Fortify SCA user. Fortify SCA version 18.20 or newer
   is recommended; 17.20 or newer is required
 * or, use Fortify on Demand (see below for details)
 
@@ -127,7 +127,7 @@ scalacOptions += s"-P:fortify:build=myproject"
 
 Substituting any build id you like for `myproject`.  Specifying the
 build id causes translated files to be written to the usual location
-used by SCA (`$HOME/.fortify/sca18.1/build/myproject`).  (If you
+used by SCA (`$HOME/.fortify/sca18.2/build/myproject`).  (If you
 prefer to specify the output directory directly, use
 `-P:fortify:out=...` instead, filling in a filesystem path for `...`.)
 
@@ -355,8 +355,8 @@ Substituting your own build id for `myproject`.  (Or, use the
 `-P:fortify:out=...` to specify the output directory directly.)
 
 When build id support is enabled, it is currently assumed that
-you are running a version of Fortify SCA in the 18.1 series,
-so that translated files are written to `~/.fortify/sca18.1`.
+you are running a version of Fortify SCA in the 18.2 series,
+so that translated files are written to `~/.fortify/sca18.2`.
 If you are using some other version of Fortify SCA, for
 example some version in the 17.2 series, add e.g.:
 
@@ -489,6 +489,13 @@ or Micro Focus.
   compiler plugin. (issue 215)
 
 ## Release notes
+
+### 1.0.13 (December 2, 2018)
+
+* recommended version of Fortify SCA is now 18.20 (formerly 18.10);
+  by default, files are now written to `~/.fortify/sca18.2`
+  (formerly `~/.fortify/sca18.1`) (issue 310)
+* add experimental support for Scala 2.13.0-M5 (and drop support for M4)
 
 ### 1.0.12 (October 2, 2018)
 
