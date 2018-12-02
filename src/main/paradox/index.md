@@ -490,11 +490,12 @@ or Micro Focus.
 
 ## Release notes
 
-### 1.0.13 (coming soon)
+### 1.0.13 (December 2, 2018)
 
 * recommended version of Fortify SCA is now 18.20 (formerly 18.10);
   by default, files are now written to `~/.fortify/sca18.2`
   (formerly `~/.fortify/sca18.1`) (issue 310)
+* add experimental support for Scala 2.13.0-M5 (and drop support for M4)
 
 ### 1.0.12 (October 2, 2018)
 
