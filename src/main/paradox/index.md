@@ -38,7 +38,7 @@ The following Scala versions are supported:
 - Scala 2.12.3 or newer
 
 The latest patch releases are recommended (2.11.12 and 2.12.8, as of
-October 2018).
+January 2019).
 
 To translate Scala code for Fortify to scan, you must be a current
 Lightbend subscriber.
