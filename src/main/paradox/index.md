@@ -497,12 +497,16 @@ or Micro Focus.
   (formerly `~/.fortify/sca18.1`) (issue 310)
 * add experimental support for Scala 2.13.0-M5 (and drop support for M4)
 
+available for Scala versions: 2.11.{6-8,11-12}, 2.12.{3-8}, 2.13.0-M5
+
 ### 1.0.12 (October 2, 2018)
 
 * improved tracking of data flow through trait methods (issue 297)
 * improved tracking of data flow across multiple source files (issue 302)
 * improved accuracy of line number information in reported vulnerabilities
   (issue 301)
+
+available for Scala versions: 2.11.{6-8,11-12}, 2.12.{3-8}, 2.13.0-M4
 
 ### 1.0.11 (July 12, 2018)
 
