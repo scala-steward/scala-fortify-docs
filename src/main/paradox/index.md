@@ -49,6 +49,8 @@ To actually scan translated code for vulnerabilities, you must either:
   is recommended; 17.20 or newer is required
 * or, use Fortify on Demand (see below for details)
 
+Fortify's own system requirements are [documented here](https://www.microfocus.com/documentation/fortify-webinspect/1820/Fortify_Sys_Reqs_18.20.pdf).
+
 ## License installation
 
 The license file for using the Scala translator is a standard Lightbend
