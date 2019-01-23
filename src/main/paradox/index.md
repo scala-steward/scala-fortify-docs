@@ -147,10 +147,10 @@ These changes to your build will cause the compiler plugin to run and
 translated files (with an `.nst` extension) to be generated whenever
 your code is compiled (e.g., with the `compile` task).
 
-For the scan step, supplying the build id again will allow the
-scanner to find the translated files.  For example:
+For the scan step, supplying the same build id again (with `-b`)
+will allow the scanner to find the translated files.  For example:
 
-    sourceanalyzer -b myproject -f scan.fpr -scan
+    sourceanalyzer -b myproject -f myproject.fpr -scan
 
 ### Multi-project builds
 
@@ -371,7 +371,7 @@ omit it if you want to let compilation finish.
 For the scan step, supplying the build id again will allow the
 scanner to find the translated files.  For example:
 
-    sourceanalyzer -b myproject -f scan.fpr -scan
+    sourceanalyzer -b myproject -f myproject.fpr -scan
 
 ## Using the translator (other build tools)
 
