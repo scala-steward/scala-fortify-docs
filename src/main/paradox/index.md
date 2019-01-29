@@ -447,8 +447,8 @@ you may declare them as "provided".
 
 ## Fortify on Demand
 
-[Micro Focus Fortify on Demand](https://software.microfocus.com/en-us/products/application-security-testing/overview),
-version 17.4, supports Scala.
+[Micro Focus Fortify on Demand](https://software.microfocus.com/en-us/products/application-security-testing/overview)
+supports Scala.
 
 To submit something to Fortify on Demand, you need to generate a
 Mobile Build Session (`.mbs`) file.  After translating your
