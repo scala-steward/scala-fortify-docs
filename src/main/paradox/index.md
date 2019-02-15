@@ -1,8 +1,14 @@
 # Fortify SCA for Scala
 
-This page documents Scala support in Fortify SCA.  For an
-overview of Fortify SCA in general,
-[visit this Micro Focus page](https://software.microfocus.com/en-us/products/static-code-analysis-sast/overview).
+Fortify SCA (Static Code Analyzer), by Micro Focus, finds security
+issues in source code.  For an overview, [visit
+microfocus.com](https://software.microfocus.com/en-us/products/static-code-analysis-sast/overview).
+
+Fortify supports many programming languages.  This page provides
+technical documentation about its support for Scala in particular.
+
+Scala support in Fortify is the product of a collaboration between
+Micro Focus and Lightbend.
 
 ## Supported language features
 
